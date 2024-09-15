@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package io.androidpoet.countrypicker
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,7 +22,7 @@ public data class Country(
   val name: String,
   val alpha2: String,
   val phoneCountryCode: String,
-  val localeForICU: String? = null, // Optional fields
-  val currencyCode: String? = null, // Optional fields
+  val localeForICU: String? = null,
+  val currencyCode: String? = null,
   val flag: String? = null,
 )

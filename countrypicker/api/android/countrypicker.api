@@ -54,7 +54,7 @@ public final class io/androidpoet/countrypicker/Country$Companion {
 }
 
 public final class io/androidpoet/countrypicker/CountryPickerKt {
-	public static final fun CountryPicker (Lkotlin/jvm/functions/Function1;ZLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
+	public static final fun CountryPicker-vtnTUvE (Lkotlin/jvm/functions/Function1;ZLkotlin/jvm/functions/Function0;ZJJJLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class io/androidpoet/countrypicker/CountryPickerState {

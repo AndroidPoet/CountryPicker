@@ -2,47 +2,56 @@
   {
     "name": "Afghanistan",
     "alpha2": "AF",
-    "phoneCountryCode": "+93"
+    "phoneCountryCode": "+93",
+    "currencyCode": "AFN"
   },
   {
     "name": "Aland Islands",
     "alpha2": "AX",
-    "phoneCountryCode": "+358"
+    "phoneCountryCode": "+358",
+    "currencyCode": "EUR"
   },
   {
     "name": "Albania",
     "alpha2": "AL",
-    "phoneCountryCode": "+355"
+    "phoneCountryCode": "+355",
+    "currencyCode": "ALL"
   },
   {
     "name": "Algeria",
     "alpha2": "DZ",
-    "phoneCountryCode": "+213"
+    "phoneCountryCode": "+213",
+    "currencyCode": "DZD"
   },
   {
     "name": "American Samoa",
     "alpha2": "AS",
-    "phoneCountryCode": "+1 684"
+    "phoneCountryCode": "+1 684",
+    "currencyCode": "USD"
   },
   {
     "name": "Andorra",
     "alpha2": "AD",
-    "phoneCountryCode": "+376"
+    "phoneCountryCode": "+376",
+    "currencyCode": "EUR"
   },
   {
     "name": "Angola",
     "alpha2": "AO",
-    "phoneCountryCode": "+244"
+    "phoneCountryCode": "+244",
+    "currencyCode": "AOA"
   },
   {
     "name": "Anguilla",
     "alpha2": "AI",
-    "phoneCountryCode": "+1 264"
+    "phoneCountryCode": "+1 264",
+    "currencyCode": "XCD"
   },
   {
     "name": "Antarctica",
     "alpha2": "AQ",
-    "phoneCountryCode": "+672"
+    "phoneCountryCode": "+672",
+    "currencyCode": "Various"
   },
   {
     "name": "Antigua and Barbuda",

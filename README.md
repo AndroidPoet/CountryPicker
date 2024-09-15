@@ -26,6 +26,10 @@
 - 🏳️ Includes country flags
 
 ## Download
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.androidpoet/countrypicker.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.androidpoet%22%20AND%20a:%22countrypicker%22)
+
+### Gradle
+
 
 Add the dependency below to your **module**'s `build.gradle` file:
 

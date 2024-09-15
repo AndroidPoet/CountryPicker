@@ -30,7 +30,7 @@ internal object CountryUtils {
       }
     }
   }
-
+  
   internal fun loadCountries(jsonString: String): List<Country> =
     runCatching {
       Json

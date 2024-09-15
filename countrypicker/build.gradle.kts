@@ -84,7 +84,6 @@ kotlin {
         implementation(compose.material3)
         implementation(compose.runtime)
         implementation(compose.animation)
-        implementation(compose.foundation)
         implementation(compose.components.resources)
         implementation(libs.kotlinx.serialization.json)
         implementation(libs.kotlin.codepoints.deluxe)
