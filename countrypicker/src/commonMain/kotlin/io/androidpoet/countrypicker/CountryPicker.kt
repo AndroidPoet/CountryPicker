@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import io.androidpoet.countrypicker.CountryUtils.getCurrentCountry
 import io.androidpoet.countrypicker.CountryUtils.loadCountries
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,7 +40,8 @@ public fun CountryPicker(
   val coroutineScope = rememberCoroutineScope()
 
   LaunchedEffect(Unit) {
-    coroutineScope.launch {
+    coroutineScope.launch(Dispatchers.Default) {
+
       try {
         val loadedCountries = loadCountries(countriesJsonString)
         val currentCountry = getCurrentCountry(loadedCountries)

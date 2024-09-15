@@ -21,7 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
-
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+@Serializable
 public data class CountryPickerState(
   val countries: List<Country> = emptyList(),
   val currentCountry: Country? = null,
@@ -29,25 +32,14 @@ public data class CountryPickerState(
   val error: String? = null,
 )
 
-public val CountryPickerStateSaver: Saver<CountryPickerState, Any> =
-  listSaver(
-    save = { state ->
-      listOf(
-        state.countries,
-        state.currentCountry,
-        state.isLoading,
-        state.error,
-      )
-    },
-    restore = { items ->
-      CountryPickerState(
-        countries = items[0] as List<Country>,
-        currentCountry = items[1] as? Country,
-        isLoading = items[2] as Boolean,
-        error = items[3] as? String,
-      )
-    },
-  )
+public val CountryPickerStateSaver: Saver<CountryPickerState, String> = Saver(
+  save = { state ->
+    Json.encodeToString(state)
+  },
+  restore = { jsonString ->
+    Json.decodeFromString<CountryPickerState>(jsonString)
+  }
+)
 
 @Composable
 public fun rememberCountryPickerState(): MutableState<CountryPickerState> =
