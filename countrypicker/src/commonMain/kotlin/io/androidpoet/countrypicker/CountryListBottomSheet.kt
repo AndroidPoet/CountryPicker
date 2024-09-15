@@ -53,6 +53,10 @@ internal fun CountryListBottomSheet(
   showBottomSheet: Boolean,
   onDismiss: () -> Unit,
   onItemClick: (Country) -> Unit,
+  searchEnabled: Boolean,
+  itemBackgroundColor: Color,
+  textColor: Color,
+  searchBarBorderColor: Color
 ) {
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   val coroutineScope = rememberCoroutineScope()
@@ -95,28 +99,29 @@ internal fun CountryListBottomSheet(
       containerColor = Color.White,
     ) {
       Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
-        // Search bar
-        OutlinedTextField(
-          value = searchQuery,
-          onValueChange = { searchQuery = it },
-          modifier = Modifier.fillMaxWidth().padding(16.dp),
-          placeholder = { Text("Search countries") },
-          leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-          trailingIcon = {
-            if (searchQuery.isNotEmpty()) {
-              IconButton(onClick = { searchQuery = "" }) {
-                Icon(Icons.Default.Clear, contentDescription = "Clear search")
+        if (searchEnabled) {
+          OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            placeholder = { Text("Search countries") },
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+            trailingIcon = {
+              if (searchQuery.isNotEmpty()) {
+                IconButton(onClick = { searchQuery = "" }) {
+                  Icon(Icons.Default.Clear, contentDescription = "Clear search")
+                }
               }
-            }
-          },
-          singleLine = true,
-          shape = RoundedCornerShape(24.dp),
-          colors =
-          TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.LightGray,
-            unfocusedBorderColor = Color.LightGray,
-          ),
-        )
+            },
+            singleLine = true,
+            shape = RoundedCornerShape(24.dp),
+            colors =
+            TextFieldDefaults.outlinedTextFieldColors(
+              focusedBorderColor = searchBarBorderColor,
+              unfocusedBorderColor = searchBarBorderColor,
+            ),
+          )
+        }
 
         // Country list
         LazyColumn {
@@ -133,6 +138,8 @@ internal fun CountryListBottomSheet(
                   onItemClick(country)
                 }
               },
+              itemBackgroundColor = itemBackgroundColor,
+              textColor = textColor
             )
           }
         }

@@ -20,40 +20,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import io.androidpoet.countrypicker.CountryUtils.getCurrentCountry
 import io.androidpoet.countrypicker.CountryUtils.loadCountries
 import kotlinx.coroutines.launch
-
-// @Composable
-// public fun CountryPicker(
-//  onCountryChanged: (Country) -> Unit,
-//  showBottomSheet: Boolean,
-//  onDismiss: () -> Unit,
-// ) {
-//  var currentCountry by rememberSaveable(stateSaver = CountrySaver){ mutableStateOf<Country?>(null) }
-//  var countries by rememberSaveable(stateSaver = CountrySaver) { mutableStateOf(emptyList<Country>()) }
-//  LaunchedEffect(Unit) {
-//    countries = loadCountries(countriesJsonString)
-//    currentCountry = getCurrentCountry(countries)
-//    currentCountry?.let { onCountryChanged(it) }
-//  }
-//
-//  CountryListBottomSheet(
-//    countries = countries,
-//    showBottomSheet = showBottomSheet,
-//    onDismiss = onDismiss,
-//    onItemClick = {
-//      currentCountry = it
-//      onCountryChanged(it)
-//    },
-//  )
-// }
 
 @Composable
 public fun CountryPicker(
   onCountryChanged: (Country) -> Unit,
   showBottomSheet: Boolean,
   onDismiss: () -> Unit,
+  searchEnabled: Boolean = true,
+  itemBackgroundColor: Color = Color.White,
+  textColor: Color = Color.Black,
+  searchBarColor: Color = Color.LightGray
 ) {
   var state by rememberCountryPickerState()
   val coroutineScope = rememberCoroutineScope()
@@ -63,11 +43,10 @@ public fun CountryPicker(
       try {
         val loadedCountries = loadCountries(countriesJsonString)
         val currentCountry = getCurrentCountry(loadedCountries)
-        state =
-          state.copy(
-            countries = loadedCountries,
-            currentCountry = currentCountry,
-          )
+        state = state.copy(
+          countries = loadedCountries,
+          currentCountry = currentCountry,
+        )
         currentCountry?.let { onCountryChanged(it) }
       } catch (e: Exception) {
       }
@@ -82,5 +61,12 @@ public fun CountryPicker(
       state = state.copy(currentCountry = country)
       onCountryChanged(country)
     },
+    searchEnabled = searchEnabled,
+    itemBackgroundColor = itemBackgroundColor,
+    textColor = textColor,
+    searchBarBorderColor = searchBarColor,
   )
 }
+
+
+

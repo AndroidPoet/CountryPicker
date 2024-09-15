@@ -35,13 +35,15 @@ internal fun CountryItem(
   name: String,
   countryCode: String,
   flag: String,
+  itemBackgroundColor: Color,
+  textColor: Color,
   onItemClick: () -> Unit,
 ) {
   Card(
     onClick = onItemClick,
     colors =
     CardColors(
-      containerColor = Color.White,
+      containerColor = itemBackgroundColor,
       contentColor = Color.Transparent,
       disabledContainerColor = Color.Transparent,
       disabledContentColor = Color.Transparent,
@@ -59,19 +61,19 @@ internal fun CountryItem(
         text = flag,
         fontSize = 24.sp,
         modifier = Modifier.padding(end = 16.dp),
-        color = Color.Black,
+        color = textColor,
       )
 
       Text(
         text = name,
         style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier.weight(1f),
-        color = Color.Black,
+        color = textColor,
       )
       Text(
         text = countryCode,
         style = MaterialTheme.typography.bodyMedium,
-        color = Color.Black,
+        color = textColor,
       )
     }
   }
