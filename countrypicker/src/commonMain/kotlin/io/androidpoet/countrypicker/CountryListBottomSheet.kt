@@ -56,7 +56,7 @@ internal fun CountryListBottomSheet(
   searchEnabled: Boolean,
   itemBackgroundColor: Color,
   textColor: Color,
-  searchBarBorderColor: Color
+  searchBarBorderColor: Color,
 ) {
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   val coroutineScope = rememberCoroutineScope()
@@ -139,7 +139,7 @@ internal fun CountryListBottomSheet(
                 }
               },
               itemBackgroundColor = itemBackgroundColor,
-              textColor = textColor
+              textColor = textColor,
             )
           }
         }

@@ -3,13 +3,19 @@
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
-  <a href="https://github.com/yourusername/ComposePicker/actions/workflows/android.yml"><img alt="Build Status" 
-  src="https://github.com/yourusername/ComposePicker/actions/workflows/android.yml/badge.svg"/></a>
+  <a href="https://github.com/androidpoet/CountryPicker/actions/workflows/android.yml"><img alt="Build Status" 
+  src="https://github.com/androidpoet/CountryPicker/actions/workflows/android.yml/badge.svg"/></a>
 </p>
 
 <p align="center">
-🌍 Compose Country Picker is a lightweight country picker library for Compose Multiplatform. It provides an easy-to-use and customizable component for selecting countries in your Compose Multiplatform applications.
+🌍A lightweight, customizable country selection component for Compose Multiplatform applications
 </p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/be09bde9-f9eb-4033-92ba-2ee4419807bc" alt="Country Picker Demo" width="300"/>
+</p>
+
+
 
 ## Features
 
@@ -33,11 +39,11 @@ For Kotlin Multiplatform, add the dependency below to your **module**'s `build.g
 
 ```kotlin
 sourceSets {
-    val commonMain by getting {
-        dependencies {
-            implementation("io.github.androidpoet.countrypicker:0.1.1")
-        }
+  val commonMain by getting {
+    dependencies {
+      implementation("io.github.androidpoet.countrypicker:0.1.1")
     }
+  }
 }
 ```
 
@@ -48,18 +54,30 @@ Here's a basic example of how to use the ComposePicker in your Compose Multiplat
 ```kotlin
 @Composable
 fun CountryPickerExample() {
-    var selectedCountry by remember { mutableStateOf<Country?>(null) }
-    
-    ComposePicker(
-        onCountrySelected = { country ->
-            selectedCountry = country
-        }
-    )
-    
-    // Display selected country
-    selectedCountry?.let {
-        Text("Selected: ${it.name} (${it.code})")
+  var showBottomSheet by remember { mutableStateOf(false) }
+  var currantCountry by remember { mutableStateOf("") }
+
+  CountryPicker(
+    onCountryChanged = {
+      currantCountry = it.name + " " + it.flag + " " + it.alpha2
+    },
+    onDismiss = {
+      showBottomSheet = false
+    },
+    showBottomSheet = showBottomSheet,
+  )
+
+  Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column {
+      Text(currantCountry, fontSize = 20.sp)
+
+      Button(onClick = {
+        showBottomSheet = !showBottomSheet
+      }) {
+        Text("open Country Picker", fontSize = 15.sp)
+      }
     }
+  }
 }
 ```
 
@@ -68,16 +86,21 @@ fun CountryPickerExample() {
 ComposePicker offers various customization options:
 
 ```kotlin
-ComposePicker(
-    onCountrySelected = { country ->
-        // Handle selection
-    },
-    searchEnabled = true,
-    showFlags = true,
-    itemBackgroundColor = Color.White,
-    textColor = Color.Black,
-    searchBarColor = Color.LightGray
+
+CountryPicker(
+  onCountryChanged = {
+    currantCountry = it.name + " " + it.flag + " " + it.alpha2
+  },
+  onDismiss = {
+    showBottomSheet = false
+  },
+  showBottomSheet = showBottomSheet,
+  searchEnabled = false,
+  itemBackgroundColor = Color.White,
+  textColor = Color.Black,
+  searchBarColor = Color.LightGray
 )
+
 ```
 
 ## Contributing

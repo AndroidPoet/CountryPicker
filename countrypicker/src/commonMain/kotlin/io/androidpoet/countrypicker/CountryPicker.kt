@@ -33,7 +33,7 @@ public fun CountryPicker(
   searchEnabled: Boolean = true,
   itemBackgroundColor: Color = Color.White,
   textColor: Color = Color.Black,
-  searchBarColor: Color = Color.LightGray
+  searchBarColor: Color = Color.LightGray,
 ) {
   var state by rememberCountryPickerState()
   val coroutineScope = rememberCoroutineScope()
@@ -67,6 +67,3 @@ public fun CountryPicker(
     searchBarBorderColor = searchBarColor,
   )
 }
-
-
-
