@@ -24,7 +24,7 @@ mavenPublishing {
   pom {
     name.set(artifactId)
     description.set(
-      "\uD83C\uDF0D Compose Country Picker is a lightweight country picker library for Compose Multiplatform. It provides an easy-to-use and customizable component for selecting countries in your Compose Multiplatform applications",
+      "\uD83C\uDF0DA lightweight, customizable country selection component for Compose Multiplatform applications",
     )
   }
 }
