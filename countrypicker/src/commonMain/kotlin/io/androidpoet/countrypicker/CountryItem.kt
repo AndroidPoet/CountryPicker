@@ -16,11 +16,13 @@
 package io.androidpoet.countrypicker
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,25 +37,23 @@ internal fun CountryItem(
   name: String,
   countryCode: String,
   flag: String,
+  currencyCode: String,
+  currencySign: String,
   itemBackgroundColor: Color,
   textColor: Color,
   onItemClick: () -> Unit,
 ) {
   Card(
     onClick = onItemClick,
-    colors =
-    CardColors(
+    colors = CardDefaults.cardColors(
       containerColor = itemBackgroundColor,
       contentColor = Color.Transparent,
-      disabledContainerColor = Color.Transparent,
-      disabledContentColor = Color.Transparent,
     ),
+    modifier = Modifier.fillMaxWidth()
   ) {
     Row(
-      modifier =
-      Modifier
+      modifier = Modifier
         .fillMaxWidth()
-        .clickable(onClick = onItemClick)
         .padding(horizontal = 16.dp, vertical = 12.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -64,12 +64,21 @@ internal fun CountryItem(
         color = textColor,
       )
 
-      Text(
-        text = name,
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.weight(1f),
-        color = textColor,
-      )
+      Column(
+        modifier = Modifier.weight(1f)
+      ) {
+        Text(
+          text = name,
+          style = MaterialTheme.typography.bodyLarge,
+          color = textColor,
+        )
+        Text(
+          text = "$currencyCode • $currencySign",
+          style = MaterialTheme.typography.bodySmall,
+          color = textColor.copy(alpha = 0.7f),
+        )
+      }
+
       Text(
         text = countryCode,
         style = MaterialTheme.typography.bodyMedium,

@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import io.androidpoet.countrypicker.CountryPicker
+import io.androidpoet.countrypicker.CountryUtils.generateCurrencySymbol
 import io.androidpoet.countrypickerdemo.ui.theme.CountryPickerDemoTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,7 +45,11 @@ class MainActivity : ComponentActivity() {
 
         CountryPicker(
           onCountryChanged = {
-            currantCountry = it.name + " " + it.flag + " " + it.alpha2
+            currantCountry =
+              it.name + " " + it.flag + " " + it.alpha2 + it.currencySign.orEmpty()
+
+            println(it.currencySign.orEmpty())
+
           },
           onDismiss = {
             showBottomSheet = false

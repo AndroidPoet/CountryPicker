@@ -55,6 +55,7 @@ internal fun CountryListBottomSheet(
   onItemClick: (Country) -> Unit,
   searchEnabled: Boolean,
   itemBackgroundColor: Color,
+  backgroundColor: Color,
   textColor: Color,
   searchBarBorderColor: Color,
 ) {
@@ -98,7 +99,7 @@ internal fun CountryListBottomSheet(
       },
       containerColor = Color.White,
     ) {
-      Column(modifier = Modifier.fillMaxWidth().background(Color.White)) {
+      Column(modifier = Modifier.fillMaxWidth().background(backgroundColor)) {
         if (searchEnabled) {
           OutlinedTextField(
             value = searchQuery,
@@ -140,6 +141,8 @@ internal fun CountryListBottomSheet(
               },
               itemBackgroundColor = itemBackgroundColor,
               textColor = textColor,
+              currencyCode = country.currencyCode.orEmpty(),
+              currencySign = country.currencySign.orEmpty(),
             )
           }
         }

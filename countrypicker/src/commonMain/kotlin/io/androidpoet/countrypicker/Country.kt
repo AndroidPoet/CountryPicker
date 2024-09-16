@@ -24,5 +24,6 @@ public data class Country(
   val phoneCountryCode: String,
   val localeForICU: String? = null,
   val currencyCode: String? = null,
+  val currencySign: String? = null,
   val flag: String? = null,
 )

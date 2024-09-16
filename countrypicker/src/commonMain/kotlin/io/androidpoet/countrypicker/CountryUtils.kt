@@ -21,7 +21,7 @@ import kotlinx.serialization.json.Json
 
 private const val REGIONAL_INDICATOR_OFFSET = 0x1F1A5
 
-internal object CountryUtils {
+public object CountryUtils {
   private fun countryCodeToFlagEmoji(countryCode: String): String {
     require(countryCode.length == 2) { "Country code must be 2 characters long" }
     return buildString {
@@ -30,16 +30,30 @@ internal object CountryUtils {
       }
     }
   }
-  
-  internal fun loadCountries(jsonString: String): List<Country> =
-    runCatching {
-      Json
-        .decodeFromString<List<Country>>(jsonString)
-        .map { it.copy(flag = countryCodeToFlagEmoji(it.alpha2)) }
-    }.getOrElse { error ->
-      println("Error parsing JSON ${error.message}")
-      emptyList()
+
+  public fun generateCurrencySymbol(currencyCode: String): String {
+    return when {
+      currencyCode.length >= 2 -> {
+        val firstChar = currencyCode[0].toUpperCase()
+        val secondChar = currencyCode[1].toLowerCase()
+        "$firstChar$secondChar"
+      }
+
+      currencyCode.length == 1 -> currencyCode.toUpperCase()
+      else -> "?"
     }
+  }
+
+  internal fun loadCountries(jsonString: String): List<Country> = runCatching {
+    Json.decodeFromString<List<Country>>(jsonString).map {
+      it.copy(
+        flag = countryCodeToFlagEmoji(it.alpha2)
+      )
+    }
+  }.getOrElse { error ->
+    println("Error parsing JSON ${error.message}")
+    emptyList()
+  }
 
   internal fun getCurrentCountry(countries: List<Country>): Country? =
     countries.find { it.alpha2 == Locale.current.region }

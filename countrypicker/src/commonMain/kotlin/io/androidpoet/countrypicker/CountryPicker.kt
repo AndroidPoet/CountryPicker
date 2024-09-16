@@ -34,6 +34,7 @@ public fun CountryPicker(
   searchEnabled: Boolean = true,
   itemBackgroundColor: Color = Color.White,
   textColor: Color = Color.Black,
+  backgroundColor: Color = Color.White,
   searchBarColor: Color = Color.LightGray,
 ) {
   var state by rememberCountryPickerState()
@@ -41,7 +42,6 @@ public fun CountryPicker(
 
   LaunchedEffect(Unit) {
     coroutineScope.launch(Dispatchers.Default) {
-
       try {
         val loadedCountries = loadCountries(countriesJsonString)
         val currentCountry = getCurrentCountry(loadedCountries)
@@ -67,5 +67,6 @@ public fun CountryPicker(
     itemBackgroundColor = itemBackgroundColor,
     textColor = textColor,
     searchBarBorderColor = searchBarColor,
+    backgroundColor = backgroundColor
   )
 }
