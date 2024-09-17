@@ -15,13 +15,11 @@
  */
 package io.androidpoet.countrypicker
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-internal fun CountryItem(
+public fun CountryItem(
   name: String,
   countryCode: String,
   flag: String,
@@ -49,7 +47,7 @@ internal fun CountryItem(
       containerColor = itemBackgroundColor,
       contentColor = Color.Transparent,
     ),
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxWidth(),
   ) {
     Row(
       modifier = Modifier
@@ -65,7 +63,7 @@ internal fun CountryItem(
       )
 
       Column(
-        modifier = Modifier.weight(1f)
+        modifier = Modifier.weight(1f),
       ) {
         Text(
           text = name,

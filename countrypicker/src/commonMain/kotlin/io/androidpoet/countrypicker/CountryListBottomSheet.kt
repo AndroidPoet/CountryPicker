@@ -49,51 +49,44 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CountryListBottomSheet(
-  countries: List<Country>,
-  showBottomSheet: Boolean,
   onDismiss: () -> Unit,
   onItemClick: (Country) -> Unit,
-  searchEnabled: Boolean,
-  itemBackgroundColor: Color,
-  backgroundColor: Color,
-  textColor: Color,
-  searchBarBorderColor: Color,
+  countries: List<Country>,
+  itemContent: @Composable (Country, () -> Unit) -> Unit,
+  searchEnabled: Boolean = true,
+  isBottomSheetVisible: Boolean = true,
+  backgroundColor: Color = Color.White,
+  searchBarBorderColor: Color = Color.Gray,
 ) {
   val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
   val coroutineScope = rememberCoroutineScope()
-  var isSheetVisible by remember { mutableStateOf(false) }
   var searchQuery by remember { mutableStateOf("") }
-  val filteredCountries =
-    remember(searchQuery, countries) {
-      if (searchQuery.isEmpty()) {
-        countries
-      } else {
-        countries.filter {
-          it.name.contains(
-            searchQuery,
-            ignoreCase = true,
-          ) ||
-            it.phoneCountryCode.contains(searchQuery, ignoreCase = true)
-        }
+
+  val filteredCountries = remember(searchQuery, countries) {
+    if (searchQuery.isEmpty()) {
+      countries
+    } else {
+      countries.filter {
+        it.name.contains(searchQuery, ignoreCase = true) ||
+          it.phoneCountryCode.contains(searchQuery, ignoreCase = true)
       }
     }
+  }
 
-  LaunchedEffect(showBottomSheet) {
-    if (showBottomSheet) {
-      isSheetVisible = true
+  LaunchedEffect(isBottomSheetVisible) {
+    if (isBottomSheetVisible) {
+      sheetState.show()
     } else {
       sheetState.hide()
     }
   }
-
-  if (isSheetVisible) {
+  if (isBottomSheetVisible) {
     ModalBottomSheet(
       modifier = Modifier.fillMaxHeight(0.9f),
       sheetState = sheetState,
       onDismissRequest = {
         coroutineScope.launch {
           sheetState.hide()
-          isSheetVisible = false
           onDismiss()
         }
       },
@@ -116,34 +109,22 @@ internal fun CountryListBottomSheet(
             },
             singleLine = true,
             shape = RoundedCornerShape(24.dp),
-            colors =
-            TextFieldDefaults.outlinedTextFieldColors(
+            colors = TextFieldDefaults.outlinedTextFieldColors(
               focusedBorderColor = searchBarBorderColor,
               unfocusedBorderColor = searchBarBorderColor,
             ),
           )
         }
 
-        // Country list
         LazyColumn {
           items(filteredCountries) { country ->
-            CountryItem(
-              name = country.name,
-              countryCode = country.phoneCountryCode,
-              flag = country.flag.toString(),
-              onItemClick = {
-                coroutineScope.launch {
-                  sheetState.hide()
-                  isSheetVisible = false
-                  onDismiss()
-                  onItemClick(country)
-                }
-              },
-              itemBackgroundColor = itemBackgroundColor,
-              textColor = textColor,
-              currencyCode = country.currencyCode.orEmpty(),
-              currencySign = country.currencySign.orEmpty(),
-            )
+            itemContent(country) {
+              coroutineScope.launch {
+                sheetState.hide()
+                onDismiss()
+                onItemClick(country)
+              }
+            }
           }
         }
       }

@@ -35,7 +35,7 @@ Add the dependency below to your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.github.androidpoet.countrypicker:0.1.1")
+    implementation("io.github.androidpoet.countrypicker:$version")
 }
 ```
 
@@ -45,7 +45,7 @@ For Kotlin Multiplatform, add the dependency below to your **module**'s `build.g
 sourceSets {
   val commonMain by getting {
     dependencies {
-      implementation("io.github.androidpoet.countrypicker:0.1.1")
+      implementation("io.github.androidpoet.countrypicker:$version")
     }
   }
 }
@@ -58,17 +58,29 @@ Here's a basic example of how to use the ComposePicker in your Compose Multiplat
 ```kotlin
 @Composable
 fun CountryPickerExample() {
-  var showBottomSheet by remember { mutableStateOf(false) }
   var currantCountry by remember { mutableStateOf("") }
-
+  var isBottomSheetVisible by remember { mutableStateOf(false) }
   CountryPicker(
     onCountryChanged = {
       currantCountry = it.name + " " + it.flag + " " + it.alpha2
     },
     onDismiss = {
-      showBottomSheet = false
+      isBottomSheetVisible = false
     },
-    showBottomSheet = showBottomSheet,
+    itemContent = { country, onClick ->
+      // pass your own layout here
+      CountryItem(
+        name = country.name,
+        countryCode = country.phoneCountryCode,
+        flag = country.flag.toString(),
+        onItemClick = onClick,
+        itemBackgroundColor = Color.White,
+        textColor = Color.Black,
+        currencyCode = country.currencyCode.orEmpty(),
+        currencySign = country.currencySign.orEmpty(),
+      )
+    },
+    isBottomSheetVisible = isBottomSheetVisible,
   )
 
   Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -76,9 +88,9 @@ fun CountryPickerExample() {
       Text(currantCountry, fontSize = 20.sp)
 
       Button(onClick = {
-        showBottomSheet = !showBottomSheet
+        isBottomSheetVisible = !isBottomSheetVisible
       }) {
-        Text("open Country Picker", fontSize = 15.sp)
+        Text("Open Country Picker", fontSize = 15.sp)
       }
     }
   }
@@ -96,14 +108,24 @@ CountryPicker(
     currantCountry = it.name + " " + it.flag + " " + it.alpha2
   },
   onDismiss = {
-    showBottomSheet = false
+    isBottomSheetVisible = false
   },
-  showBottomSheet = showBottomSheet,
-  searchEnabled = false,
-  itemBackgroundColor = Color.White,
-  textColor = Color.Black,
-  searchBarColor = Color.LightGray
+  itemContent = { country, onClick ->
+    // pass your own layout here
+    CountryItem(
+      name = country.name,
+      countryCode = country.phoneCountryCode,
+      flag = country.flag.toString(),
+      onItemClick = onClick,
+      itemBackgroundColor = Color.White,
+      textColor = Color.Black,
+      currencyCode = country.currencyCode.orEmpty(),
+      currencySign = country.currencySign.orEmpty(),
+    )
+  },
+  isBottomSheetVisible = isBottomSheetVisible,
 )
+
 
 ```
 

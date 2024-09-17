@@ -29,7 +29,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import io.androidpoet.countrypicker.CountryItem
 import io.androidpoet.countrypicker.CountryPicker
 
 class MainActivity : ComponentActivity() {
@@ -38,23 +40,39 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       Box {
-        var showBottomSheet by remember { mutableStateOf(false) }
         var currantCountry by remember { mutableStateOf("") }
-
-        CountryPicker(onCountryChanged = {
-          currantCountry = it.name + " " + it.flag + " " + it.alpha2
-        }, onDismiss = {
-          showBottomSheet = false
-        }, showBottomSheet = showBottomSheet)
+        var isBottomSheetVisible by remember { mutableStateOf(false) }
+        CountryPicker(
+          onCountryChanged = {
+            currantCountry = it.name + " " + it.flag + " " + it.alpha2
+          },
+          onDismiss = {
+            isBottomSheetVisible = false
+          },
+          itemContent = { country, onClick ->
+            // pass your own layout here
+            CountryItem(
+              name = country.name,
+              countryCode = country.phoneCountryCode,
+              flag = country.flag.toString(),
+              onItemClick = onClick,
+              itemBackgroundColor = Color.White,
+              textColor = Color.Black,
+              currencyCode = country.currencyCode.orEmpty(),
+              currencySign = country.currencySign.orEmpty(),
+            )
+          },
+          isBottomSheetVisible = isBottomSheetVisible,
+        )
 
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
           Column {
             Text(currantCountry, fontSize = 20.sp)
 
             Button(onClick = {
-              showBottomSheet = !showBottomSheet
+              isBottomSheetVisible = !isBottomSheetVisible
             }) {
-              Text("open Country Picker", fontSize = 15.sp)
+              Text("Open Country Picker", fontSize = 15.sp)
             }
           }
         }

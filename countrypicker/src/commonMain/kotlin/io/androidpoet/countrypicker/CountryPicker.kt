@@ -29,13 +29,12 @@ import kotlinx.coroutines.launch
 @Composable
 public fun CountryPicker(
   onCountryChanged: (Country) -> Unit,
-  showBottomSheet: Boolean,
   onDismiss: () -> Unit,
   searchEnabled: Boolean = true,
-  itemBackgroundColor: Color = Color.White,
-  textColor: Color = Color.Black,
   backgroundColor: Color = Color.White,
   searchBarColor: Color = Color.LightGray,
+  isBottomSheetVisible: Boolean,
+  itemContent: @Composable (Country, () -> Unit) -> Unit,
 ) {
   var state by rememberCountryPickerState()
   val coroutineScope = rememberCoroutineScope()
@@ -57,16 +56,15 @@ public fun CountryPicker(
 
   CountryListBottomSheet(
     countries = state.countries,
-    showBottomSheet = showBottomSheet,
     onDismiss = onDismiss,
     onItemClick = { country ->
-      state = state.copy(currentCountry = country)
+      onDismiss()
       onCountryChanged(country)
     },
     searchEnabled = searchEnabled,
-    itemBackgroundColor = itemBackgroundColor,
-    textColor = textColor,
     searchBarBorderColor = searchBarColor,
-    backgroundColor = backgroundColor
+    backgroundColor = backgroundColor,
+    itemContent = itemContent,
+    isBottomSheetVisible = isBottomSheetVisible,
   )
 }

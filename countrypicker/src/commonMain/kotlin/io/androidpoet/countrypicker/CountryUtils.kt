@@ -47,7 +47,7 @@ public object CountryUtils {
   internal fun loadCountries(jsonString: String): List<Country> = runCatching {
     Json.decodeFromString<List<Country>>(jsonString).map {
       it.copy(
-        flag = countryCodeToFlagEmoji(it.alpha2)
+        flag = countryCodeToFlagEmoji(it.alpha2),
       )
     }
   }.getOrElse { error ->
